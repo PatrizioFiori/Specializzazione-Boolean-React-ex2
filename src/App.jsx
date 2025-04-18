@@ -16,14 +16,13 @@ const App = () => {
 
   const [cart, setCart] = useState([])
 
-  function handleClick(product) {
+  function addToCart(product) {
     const giaPresente = cart.some(item => item.name === product.name)
     if (giaPresente) {
       console.log("già presente nel carrello");
       return
     }
-    const newObj = { ...product, quantita: 1 }
-    setCart(curr => [...curr, newObj])
+    setCart(curr => [...curr, { ...product, quantita: 1 }])
     console.log("aggiungo un nuovo prodotto");
 
   }
@@ -38,20 +37,26 @@ const App = () => {
             <li key={index}>
               <p><strong>{product.name}</strong>: ( {product.price.toFixed(2)}€ )</p>
               <button
-                onClick={() => handleClick(product)}
+                onClick={() => addToCart(product)}
               //disabled={cart.some(item => item.name === product.name)}
               >Add product
               </button>
             </li>
           ))}
         </ul>
-        <ul>
-          {cart.map((item, index) => (
-            <li key={index}>
-              <p>{item.name} ({item.price}€) - {item.quantita} </p>
-            </li>
-          ))}
-        </ul>
+        {cart.length > 0 && (
+          <>
+            <h4>Carrello</h4>
+            <ul>
+              {cart.map((item, index) => (
+                <li key={index}>
+                  <p> {item.quantita} x {item.name} ({item.price}€) </p>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+
       </div>
 
     </>
