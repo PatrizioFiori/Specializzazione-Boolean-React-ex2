@@ -16,18 +16,6 @@ const App = () => {
 
   const [cart, setCart] = useState([])
 
-  function updateProductQuantity(product) {
-    setCart(currentCart =>
-      currentCart.map(item => {
-        if (item.name === product.name) {
-          return { ...item, quantita: item.quantita + 1 }
-        }
-        return item
-      }
-      )
-    );
-  }
-
   function reduceProductQuantity(product) {
     setCart(currentCart =>
       currentCart.map(item => {
@@ -46,17 +34,38 @@ const App = () => {
   }
 
 
-  function addToCart(product, index) {
-    const giaPresente = cart.some(item => item.name === product.name)
+  function addToCart(product) {
+    const giaPresente = cart.some(item => item.name === product.name);
+
     if (giaPresente) {
-      updateProductQuantity(product)
-      console.log("aggiungo +1 alla quantità di " + product.name);
-      return
+      setCart(currentCart =>
+        currentCart.map(item =>
+          item.name === product.name
+            ? { ...item, quantita: item.quantita + 1 }
+            : item
+        )
+      );
+      console.log("incrementata la quantità di " + product.name);
+      return;
     }
-    setCart(curr => [...curr, { ...product, quantita: 1 }])
-    console.log("aggiungo un nuovo prodotto");
-    return
+
+    setCart(curr => [...curr, { ...product, quantita: 1 }]);
+    console.log("aggiunto un nuovo prodotto");
   }
+
+
+  function handleQuantity(item, newQuantity) {
+    if (newQuantity >= 1) {
+      setCart(currentCart =>
+        currentCart.map(cartItem =>
+          cartItem.name === item.name
+            ? { ...cartItem, quantita: newQuantity }
+            : cartItem
+        )
+      );
+    }
+  }
+
 
 
   return (
@@ -68,7 +77,7 @@ const App = () => {
             <li key={index}>
               <p><strong>{product.name}</strong>: ( {product.price.toFixed(2)}€ )</p>
               <button
-                onClick={() => addToCart(product, index)}
+                onClick={() => addToCart(product)}
               >Add product
               </button>
             </li>
@@ -80,7 +89,14 @@ const App = () => {
             <ul>
               {cart.map((item, index) => (
                 <li key={index}>
-                  <p> {item.quantita} x {item.name} ({(item.price * item.quantita).toFixed(2)} €) </p>
+                  <p>
+                    <input
+                      type="number"
+                      value={item.quantita}
+                      onChange={(e) => handleQuantity(item, parseInt(e.target.value))}
+                      min={1}
+                    />
+                    x {item.name} ({(item.price * item.quantita).toFixed(2)} €) </p>
                   <button onClick={() => { reduceProductQuantity(item) }}>Rimuovi un prodotto</button>
                 </li>
               ))}
@@ -100,10 +116,19 @@ const App = () => {
 
 export default App
 
-
 //📌 Milestone 1: Mostrare la lista dei prodotti
 // Obiettivo: Vedere un elenco leggibile di tutti i prodotti con nome e prezzo.
 //📌 Milestone 2: Aggiungere prodotti al carrello
 // Obiettivo: L’utente può aggiungere prodotti al carrello e vedere una lista dei prodotti aggiunti.
 // 📌 Milestone 3: Modificare il carrello
 // Obiettivo: Gestire l’aggiunta, la rimozione e il calcolo del totale del carrello in modo dinamico.
+
+/*
+🎯 Bonus 1: Modifica dinamica delle quantità
+Al posto di mostrare solo il numero quantity, usa un input di tipo number:
+Quando l’utente modifica il valore dell’input, usa la funzione updateProductQuantity per aggiornare la quantità del prodotto.
+Migliora la funzione updateProductQuantity per gestire:
+Numeri decimali: Forza la quantità a essere un numero intero.
+Valori inferiori a 1: Non permettere quantità negative o pari a zero.
+Obiettivo: Consentire una modifica precisa e dinamica delle quantità direttamente nel carrello.
+*/
