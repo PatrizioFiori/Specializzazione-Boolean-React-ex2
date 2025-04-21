@@ -10,3 +10,6 @@
 
 📌 Milestone 3: Modificare il carrello
 **Obiettivo**: Gestire l’aggiunta, la rimozione e il calcolo del totale del carrello in modo dinamico.
+
+🎯 Bonus 1: Modifica dinamica delle quantità
+**Obiettivo**: Consentire una modifica precisa e dinamica delle quantità direttamente nel carrello.
