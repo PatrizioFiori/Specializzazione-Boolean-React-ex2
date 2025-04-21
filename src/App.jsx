@@ -37,7 +37,6 @@ const App = () => {
           return { ...item, quantita: nuovaQuantita };
 
         }
-        console.log(cart);
 
         return item;
       })

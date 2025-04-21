@@ -6,3 +6,6 @@
 
 📌 Milestone 2: Aggiungere prodotti al carrello
 Obiettivo: L’utente può aggiungere prodotti al carrello e vedere una lista dei prodotti aggiunti.
+
+📌 Milestone 3: Modificare il carrello
+Obiettivo: Gestire l’aggiunta, la rimozione e il calcolo del totale del carrello in modo dinamico.
