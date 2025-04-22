@@ -13,3 +13,6 @@
 
 🎯 Bonus 1: Modifica dinamica delle quantità
 **Obiettivo**: Consentire una modifica precisa e dinamica delle quantità direttamente nel carrello.
+
+🎯 Bonus 2: Usare useReducer per gestire lo stato del carrello
+**Obiettivo**: Migliorare la struttura del codice utilizzando un approccio più scalabile e organizzato.
